@@ -13,5 +13,15 @@ export default defineConfig(() => ({
     react(),
     tsconfigPaths(),
     svgr({ svgrOptions: { configFile: '.svgrrc.json' } })
-  ]
+  ],
+  server: {
+    proxy: {
+      '/airtable-api': {
+        target: 'https://api.airtable.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/airtable-api/, ''),
+        secure: true
+      }
+    }
+  }
 }));
