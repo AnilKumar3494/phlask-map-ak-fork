@@ -14,6 +14,8 @@ export default defineConfig(() => ({
     tsconfigPaths(),
     svgr({ svgrOptions: { configFile: '.svgrrc.json' } })
   ],
+
+  // AKNOTES: Proxy for Airtable API requests, only for local testing/development. DELETE LATER
   server: {
     proxy: {
       '/airtable-api': {

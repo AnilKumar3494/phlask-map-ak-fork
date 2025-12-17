@@ -38,36 +38,30 @@ const Contact = () => {
   };
 
   // AKNOTES: get these details
-  // const AIRTABLE_BASE_ID = 'appyNdhZZn3gpovFh'; // Extracted from your URL
-
   const AIRTABLE_BASE_ID = 'app23q26k1uxn1fcx';
-  const AIRTABLE_TABLE_NAME = 'ContactFormData'; // <--- VERIFY THIS NAME WITH DEVS
-  const AIRTABLE_API_TOKEN = import.meta.env.VITE_AIRTABLE_PAT; // Must be in .env file
+  const AIRTABLE_TABLE_NAME = 'ContactFormData';
+  const AIRTABLE_API_TOKEN = import.meta.env.VITE_AIRTABLE_PAT;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
 
     try {
-      const response = await fetch(
-        `/airtable-api/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${AIRTABLE_API_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            fields: {
-              // These keys must match the Airtable COLUMN NAMES exactly.
-              Name: formData.name,
-              Email: formData.email,
-              Feedback: formData.feedback,
-              Interest: formData.researchInterest
-            }
-          })
-        }
-      );
+      const response = await fetch(`/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fields: {
+            //AKDELETE: keys must match the Airtable COLUMN NAMES exactly.
+            Name: formData.name,
+            Email: formData.email,
+            Feedback: formData.feedback,
+            Interest: formData.researchInterest
+          }
+        })
+      });
 
       if (!response.ok) {
         console.error('Airtable Error:', await response.json());

@@ -1,3 +1,4 @@
+// AKNOTES: Read later
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
 function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
