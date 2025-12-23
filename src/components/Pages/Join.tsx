@@ -187,7 +187,7 @@ const Join = () => {
         </div>
         <div id="acknowledgements-section">
           <h2>Acknowledgements</h2>
-          <p>
+          <p className={styles.pageText}>
             This project was made possible by the time, mentorship, and
             expertise of our dedicated team of volunteers.
           </p>

@@ -38,6 +38,7 @@ const Contact = () => {
   };
 
   // AKNOTES: get these details
+  // AKNOTES: Check how these are coming for real Airtable being used
   const AIRTABLE_BASE_ID = 'app23q26k1uxn1fcx';
   const AIRTABLE_TABLE_NAME = 'ContactFormData';
   const AIRTABLE_API_TOKEN = import.meta.env.VITE_AIRTABLE_PAT;
