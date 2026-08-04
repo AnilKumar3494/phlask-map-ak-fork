@@ -3,7 +3,7 @@ import type { Provider, ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
 import type { FeedbackForm } from 'types/FeedbackEntry';
-import { env } from 'config';
+import { env } from 'config.ts';
 
 // Need access to the database? Please refer to .example.env and message us in the #phlask-data channel on Slack
 const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
@@ -12,6 +12,9 @@ const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
 const feedbackDatabaseName = 'user_feedbacks';
 const providersDatabaseName = 'providers';
+const bathroom_part1 = 'bathroom_part1';
+const bathroom_part2 = 'bathroom_part2';
+const bathroom_part3 = 'bathroom_part3';
 
 const supabase = createClient(databaseUrl, databaseApiKey);
 
@@ -153,6 +156,36 @@ export const getResourceProviders = async (
   }
   return data;
 };
+
+export const getBathroomData = async () => {
+  const [part1Res, part2Res, part3Res] = await Promise.all([
+    supabase.from(bathroom_part1).select('*'),
+    supabase.from(bathroom_part2).select('*'),
+    supabase.from(bathroom_part3).select('*')
+  ]);
+
+  if (part1Res.error || part2Res.error || part3Res.error) {
+    throw new Error(
+      `Failed to fetch water data: ${
+        part1Res.error?.message ||
+        part2Res.error?.message ||
+        part3Res.error?.message
+      }`
+    );
+  }
+
+  return {
+    part1: part1Res.data || [],
+    part2: part2Res.data || [],
+    part3: part3Res.data || []
+  };
+};
+
+const data = await getBathroomData();
+
+console.log(`Part 1 has ${data.part1.length} items`);
+console.log(`Part 2 has ${data.part2.length} items`);
+console.log(`Part 3 has ${data.part3.length} items`);
 
 export { supabase };
 export default {};
